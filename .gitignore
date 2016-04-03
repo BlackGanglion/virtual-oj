@@ -1,0 +1,4 @@
+config.js
+*.sql
+logs/*
+node_modules/
