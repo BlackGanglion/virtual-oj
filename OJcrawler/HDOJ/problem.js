@@ -4,6 +4,7 @@ import connection from '../../init/database';
 import { OJList } from '../../config';
 import logger from '../../init/log';
 import { addToQueue } from '../../init/rabbitMQ';
+import async from 'async';
 
 const HdojConfig = OJList[0];
 
@@ -14,7 +15,22 @@ export default function(pid) {
     tableName: HdojConfig.tableName
   };
 
-  addToQueue('problem', info, function(){
-    connection.end();
+  async.auto({
+    addToDataBase: function(callback) {
+      connection.query("INSERT INTO ?? SET pid = ?, status = 0;", [info.tableName, pid], function(err){
+        callback(err, null);
+      })
+    },
+    addToQueue: ['addToDataBase', function(callback, res) {
+      addToQueue('problem', info, function(){
+        connection.end();
+      });
+    }]
+  }, function(err, res) {
+    if(err !== null) {
+      connection.end();
+      logger.error(err);
+    }
   });
+
 }
