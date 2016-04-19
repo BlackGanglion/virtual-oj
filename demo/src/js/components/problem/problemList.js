@@ -1,7 +1,12 @@
 import React from 'react';
 
 class ProblemList extends React.Component {
+  constructor(props) {
+    super(props);
+  };
+
   render (){
+    const { OJList } = this.props;
     return(
       <div className="problem-list">
         <table>
@@ -15,13 +20,15 @@ class ProblemList extends React.Component {
              </tr>
            </thead>
            <tbody>
-             <tr>
-               <td>HDOJ</td>
-               <td>1001</td>
-               <td>A + B</td>
-               <td>24343</td>
-               <td>ACM题级</td>
-             </tr>
+             {this.props.posts.map((post, i) =>
+               <tr key={i}>
+                 <td>{OJList[post.ojid]}</td>
+                 <td>{post.problemId}</td>
+                 <td>{post.title}</td>
+                 <td>{new Date(post.updateTime).toLocaleTimeString()}</td>
+                 <td>{post.source}</td>
+               </tr>
+             )}
            </tbody>
         </table>
       </div>

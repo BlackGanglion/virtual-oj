@@ -8,11 +8,12 @@ class Problem extends React.Component {
   };
 
   render() {
-    const { OjType } = this.props;
+    const { OjType, posts, onChange } = this.props;
+    const OJList = ['HDOJ', 'POJ', 'ZOJ', 'TOJ'];
     return (
       <div>
-        <ProblemNav OjType={OjType}/>
-        <ProblemList />
+        <ProblemNav OjType={OjType} onChange={onChange} OJList={OJList} />
+        <ProblemList posts={posts} OJList={OJList} />
       </div>
     );
   }

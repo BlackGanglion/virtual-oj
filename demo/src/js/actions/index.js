@@ -21,7 +21,7 @@ function requestPosts(oj) {
 function receivePosts(oj, json) {
   return {
     type: RECEIVE_POSTS,
-    reddit: oj,
+    oj: oj,
     posts: json,
     receivedAt: Date.now()
   }

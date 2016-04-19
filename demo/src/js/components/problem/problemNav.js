@@ -6,14 +6,15 @@ class ProblemNav extends React.Component {
   };
 
   render (){
-    const { OjType } = this.props;
+    const { OjType, OJList, onChange } = this.props;
     return(
       <div className="problem-nav">
-        <select>
-          <option value="0" selected={OjType == "hdoj"}>HDOJ</option>
-          <option value="1" selected={OjType == "zoj"}>ZOJ</option>
-          <option value="2" selected={OjType == "poj"}>POJ</option>
-          <option value="3" selected={OjType == "toj"}>TOJ</option>
+        <select value={OjType} onChange={e => onChange(e.target.value)}>
+          {OJList.map(option =>
+            <option value={option} key={option}>
+              {option}
+            </option>)
+          }
         </select>
         <input type="text" name="name" value="" placeholder="请输入想要的题号" />
         <button type="button" name="button">提交</button>

@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux'
 import { SELECT_OJ, REQUEST_POSTS, RECEIVE_POSTS } from '../actions'
 
-function selectedOJ(state = 'hdoj', action) {
+function selectedOJ(state = 'HDOJ', action) {
   switch (action.type) {
     case SELECT_OJ:
       return action.oj
