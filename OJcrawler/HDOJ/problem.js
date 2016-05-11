@@ -23,14 +23,14 @@ export default function(pid) {
     },
     addToQueue: ['addToDataBase', function(callback, res) {
       addToQueue('problem', info, function(){
-        connection.end();
+        callback(null, null);
       });
     }]
   }, function(err, res) {
     if(err !== null) {
-      connection.end();
       logger.error(err);
     }
+    connection.end();
   });
 
 }

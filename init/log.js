@@ -5,10 +5,10 @@ import { logConfig, globalConfig } from '../config';
 
 log4js.configure({
   appenders: [{
-      type: 'file',
-      filename: globalConfig.path + logConfig.filename,
-      maxLogSize: logConfig.maxLogSize,
-      category: logConfig.category
+    type: 'file',
+    filename: globalConfig.path + '/' + logConfig.filename,
+    maxLogSize: logConfig.maxLogSize,
+    category: logConfig.category
   }]
 });
 
