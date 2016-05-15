@@ -20,16 +20,25 @@
     "babel-preset-stage-0": "^6.5.0",
     "babel-preset-stage-1": "^6.5.0",
     "babel-preset-stage-2": "^6.5.0",
-    "babel-preset-stage-3": "^6.5.0"
+    "babel-preset-stage-3": "^6.5.0",
+    "request": "^2.72.0",
+    "thunkify": "^2.1.2"
   },
   "dependencies": {
     "amqplib": "^0.4.1",
     "async": "^1.5.2",
+    "cheerio": "^0.20.0",
+    "eventproxy": "^0.3.4",
+    "express": "^4.13.4",
     "forever": "^0.15.1",
     "koa": "^2.0.0",
     "koa-66": "^0.8.4",
+    "koa-router": "^7.0.1",
     "log4js": "^0.6.33",
     "mysql": "^2.10.2",
+    "superagent": "^1.8.3",
+    "superagent-charset": "^1.0.0",
+    "url": "^0.11.0",
     "when": "^3.7.7"
   }
 }

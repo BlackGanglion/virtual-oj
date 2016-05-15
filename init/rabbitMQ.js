@@ -38,7 +38,7 @@ let addToQueue = function(queueName, info, callback) {
   });
 }
 
-let getFromQueue = function(queueName) {
+let getFromQueue = function(queueName, cb) {
   async.auto({
     connect: function(callback) {
       amqp.connect('amqp://localhost', function(err, conn) {
@@ -59,7 +59,8 @@ let getFromQueue = function(queueName) {
   }, function(err, res){
     let doWork = function(msg) {
       let content = JSON.parse(msg.content.toString());
-      logger.debug(content);
+      cb(content);
+      // logger.debug(content);
       res.createChannel.ack(msg);
     }
     res.createChannel.consume(queueName, doWork, {noAck: false});

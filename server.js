@@ -1,12 +1,16 @@
-'use strict';
+import express from'express';
+const app = express();
 
-var Koa = require('koa');
-var app = new Koa();
-var Router = require('koa-66');
-var Controller = require('./router');
-var mountRouter = new Router();
+import ProblemSubmit from './OJcrawler/HDOJ/problem';
 
-mountRouter.mount('/', Controller.router);
-app.use(mountRouter.routes());
+app.get('/:oj/:pid', function (req, res) {
+  let oj = req.params.oj;
+  let pid = req.params.pid;
 
-app.listen(3000);
+  ProblemSubmit(pid, function(ans) {
+    res.json(ans);
+  });
+});
+
+const port = process.env.PORT || 3000;
+app.listen(port, () => console.log(`✅  Listening on port ${port}...`));
