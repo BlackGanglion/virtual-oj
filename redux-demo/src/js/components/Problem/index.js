@@ -1,3 +1,10 @@
+export ProblemList from './ProblemList';
+export ProblemListReducer from './ProblemListRedux';
+
+export ProblemNav from './ProblemNav';
+export problemNavReducer from './ProblemListRedux';
+
+/*
 import React from 'react';
 import ProblemList from './problemList';
 import ProblemNav from './problemNav';
@@ -20,3 +27,4 @@ class Problem extends React.Component {
 }
 
 export default Problem;
+*/

@@ -1,14 +1,30 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
+import ReactDOM from 'react-dom';
+import { connect } from 'react-redux';
 
-class ProblemList extends React.Component {
+import { actions } from './ProblemListRedux';
+
+@connect(state => {
+  return {
+    ...state.problem.problemList
+  };
+}, {
+  ...actions
+})
+
+class ProblemList extends Component {
+  static propTypes = {
+    ojList: PropTypes.array.isRequired
+  };
+
   constructor(props) {
     super(props);
   };
 
-  render (){
+  render() {
     const { OJList } = this.props;
     return(
-      <div className="problem-list">
+      <div className="problem-list" >
         <table>
            <thead>
              <tr>

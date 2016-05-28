@@ -1,3 +1,12 @@
+import { combineReducers } from 'redux';
+import { ProblemList, ProblemNav } from '../components/Problem';
+
+export default combineReducers({
+  problemList: ProblemList,
+  problemNav: ProblemNav
+});
+
+/*
 import { combineReducers } from 'redux'
 import { SELECT_OJ, REQUEST_POSTS, RECEIVE_POSTS } from '../actions'
 
@@ -48,3 +57,4 @@ const rootReducer = combineReducers({
 })
 
 export default rootReducer
+*/

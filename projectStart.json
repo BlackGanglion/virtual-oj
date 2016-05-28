@@ -8,15 +8,5 @@
     "uid": "watchProblemsQueue2",
     "script": "watchProblemsQueue.js",
     "sourceDir": "./OJcrawler/watchRabbitMQ"
-  },
-  {
-    "uid": "watchProblemsQueue3",
-    "script": "watchProblemsQueue.js",
-    "sourceDir": "./OJcrawler/watchRabbitMQ"
-  },
-  {
-    "uid": "watchProblemsQueue4",
-    "script": "watchProblemsQueue.js",
-    "sourceDir": "./OJcrawler/watchRabbitMQ"
   }
 ]
