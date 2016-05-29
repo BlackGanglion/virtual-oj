@@ -8,7 +8,7 @@ import getProblemContent from '../HDOJ/result';
 getFromQueue('problem', function(item){
   console.log(item.pid);
 
-  if(typeof item === 'object' && item.tableName && item.pid) {
+  if(typeof item === 'object' && item.pid) {
     getProblemContent(item);
   }
 });

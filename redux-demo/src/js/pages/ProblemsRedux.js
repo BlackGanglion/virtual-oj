@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
-import { ProblemList, ProblemNav } from '../components/Problem';
+import { ProblemNavReducer, ProblemListReducer } from '../components/Problem';
 
 export default combineReducers({
-  problemList: ProblemList,
-  problemNav: ProblemNav
+  problemNav: ProblemNavReducer,
+  problemList: ProblemListReducer
 });
 
 /*

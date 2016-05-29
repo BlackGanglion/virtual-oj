@@ -9,7 +9,8 @@ import async from 'async';
 const hdojConfig = OJList[0];
 
 let getProblemCache = function(hdojInfo, callback) {
-  connection.query('SELECT * FROM ?? WHERE pid = ?', [hdojInfo.tableName, hdojInfo.pid], function(err, rows, fields) {
+  connection.query('SELECT * FROM problem WHERE ojid = ? AND pid = ?',
+    [hdojInfo.ojid, hdojInfo.pid], function(err, rows, fields) {
     if (err) throw err;
     callback(rows[0]);
   });
@@ -27,7 +28,8 @@ export default function(pid, callback) {
     if(typeof res === 'undefined') {
       async.auto({
         addToDataBase: function(callback) {
-          connection.query("INSERT INTO ?? SET pid = ?, status = 0;", [hdojInfo.tableName, pid], function(err){
+          connection.query("INSERT INTO problem SET ojid = ?, pid = ?, status = 0;",
+            [hdojInfo.ojid, pid], function(err){
             callback(err, null);
           });
         },

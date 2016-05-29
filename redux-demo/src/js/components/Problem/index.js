@@ -2,7 +2,7 @@ export ProblemList from './ProblemList';
 export ProblemListReducer from './ProblemListRedux';
 
 export ProblemNav from './ProblemNav';
-export problemNavReducer from './ProblemListRedux';
+export ProblemNavReducer from './ProblemNavRedux';
 
 /*
 import React from 'react';

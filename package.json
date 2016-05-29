@@ -10,6 +10,8 @@
     "start": "npm run queue && npm run server",
     "stop": "forever stopall",
     "test": "babel-node ./OJcrawler/HDOJ/test --presets es2015,stage-0,stage-1,stage-2,stage-3",
+    "serverTest": "babel-node --presets es2015,stage-0,stage-1,stage-2,stage-3 ./server.js",
+    "queueTest": "babel-node --presets es2015,stage-0,stage-1,stage-2,stage-3 ./OJcrawler/watchRabbitMQ/watchProblemsQueue.js",
     "mq": "rabbitmq-server"
   },
   "author": "BlackGanglion",
@@ -34,6 +36,7 @@
     "koa": "^2.0.0",
     "koa-66": "^0.8.4",
     "koa-router": "^7.0.1",
+    "lodash": "^4.13.1",
     "log4js": "^0.6.33",
     "mysql": "^2.10.2",
     "superagent": "^1.8.3",

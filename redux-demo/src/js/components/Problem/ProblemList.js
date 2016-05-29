@@ -1,12 +1,40 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
+import { Table } from 'antd';
 import { connect } from 'react-redux';
-
 import { actions } from './ProblemListRedux';
+
+import { OJList } from '../../config/config';
+
+/*
+const data = [
+  {
+    "OJId": 0,
+    "pid": 1000,
+    "title": "A + B Problem",
+    "time": 1460723511,
+    "source": "水题集1"
+  },
+  {
+    "OJId": 0,
+    "pid": 1001,
+    "title": "Sum Problem",
+    "time": 1460723510,
+    "source": "水题集2"
+  },
+  {
+    "OJId": 0,
+    "pid": 1002,
+    "title": "A + B Problem II",
+    "time": 1460723509,
+    "source": "水题集3"
+  }
+]
+*/
 
 @connect(state => {
   return {
-    ...state.problem.problemList
+    ...state.problems.problemList
   };
 }, {
   ...actions
@@ -14,39 +42,54 @@ import { actions } from './ProblemListRedux';
 
 class ProblemList extends Component {
   static propTypes = {
-    ojList: PropTypes.array.isRequired
+    OJProblems: PropTypes.array.isRequired,
+    loading: PropTypes.bool.isRequired,
+    requestProblems: PropTypes.func.isRequired
   };
 
   constructor(props) {
     super(props);
   };
 
+  componentDidMount() {
+    this.props.requestProblems({OJId: 0});
+  }
+
   render() {
-    const { OJList } = this.props;
+    const { OJProblems, loading } = this.props;
+
+    const columns = [{
+      title: 'OJ',
+      dataIndex: 'OJId',
+      key: 'OJId',
+      render: (id) => OJList[0].OJName
+    }, {
+      title: 'Prob ID',
+      dataIndex: 'pid',
+      key: 'pid',
+      sorter: (a, b) => a.pid - b.pid
+    }, {
+      title: 'Title',
+      dataIndex: 'title',
+      key: 'title',
+      render: (title, item, i) => <a href={`/problem/${item.OJId}/${item.pid}`}>{title}</a>
+    }, {
+      title: 'Update Time',
+      dataIndex: 'time',
+      key: 'time',
+      sorter: (a, b) => a.time - b.time
+    }, {
+      title: 'Source',
+      dataIndex: 'source',
+      key: 'source'
+    }];
+
     return(
       <div className="problem-list" >
-        <table>
-           <thead>
-             <tr>
-               <td>OJ</td>
-               <td>Prob ID</td>
-               <td>Title</td>
-               <td>Update Time</td>
-               <td>Source</td>
-             </tr>
-           </thead>
-           <tbody>
-             {this.props.posts.map((post, i) =>
-               <tr key={i}>
-                 <td>{OJList[post.ojid]}</td>
-                 <td>{post.problemId}</td>
-                 <td>{post.title}</td>
-                 <td>{new Date(post.updateTime).toLocaleTimeString()}</td>
-                 <td>{post.source}</td>
-               </tr>
-             )}
-           </tbody>
-        </table>
+        <Table rowKey={(record) => record.OJId + record.pid}
+          loading={loading}
+          columns={columns}
+          dataSource={OJProblems} />
       </div>
     );
   }

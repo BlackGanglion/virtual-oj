@@ -16,5 +16,6 @@ export default function configureStore(rootReducer, history) {
     initialState,
     applyMiddleware(routerMiddleware(history), thunkMiddleware, createLogger())
   );
+
   return store;
 };

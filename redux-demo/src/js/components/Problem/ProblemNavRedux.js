@@ -10,36 +10,24 @@ function selectOJ(OJId) {
   }
 }
 
-const CHANGE_PAGE = ACTION_PREFIX + 'CHANGE_PAGE';
-function changePage(page) {
+const SEARCH_PID = ACTION_PREFIX + 'SEARCH_PID';
+function onSearchPid(searchPid) {
   return {
-    type: CHANGE_PAGE,
+    type: SEARCH_PRO_ID,
     payload: {
-      page
+      searchProId
     }
   }
 }
 
-const SEARCH_PRO_TITLE = ACTION_PREFIX + 'SEARCH_PRO_TITLE';
-function searchProTitle(title) {
-  return {
-    type: SEARCH_PRO_TITLE,
-    payload: {
-      title
-    }
-  }
-}
-
-export const action = {
+export const actions = {
   selectOJ,
-  changePage,
-  searchProTitle
+  onSearchPid
 };
 
 const initialState = {
   OJId: 0,
-  page: 1,
-  title: ''
+  searchPid: '',
 };
 
 export default function ProblemNavReducer(state = initialState, action) {
@@ -47,14 +35,13 @@ export default function ProblemNavReducer(state = initialState, action) {
     case SELECT_OJ: {
       return {
         ...state,
-        OJId: action.payload.OJId,
-        page: 1
+        OJId: action.payload.OJId
       }
     }
-    case CHANGE_PAGE: {
+    case SEARCH_PID: {
       return {
         ...state,
-        page: action.payload.page
+        searchPid: action.payload.searchPid
       }
     }
     default: {

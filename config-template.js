@@ -18,8 +18,7 @@ const logConfig = {
 const OJList = [
   {
     ojid: 0,
-    problemUrl: '',
-    tableName: ''
+    problemUrl: ''
   }
 ]
 
