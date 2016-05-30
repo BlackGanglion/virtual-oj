@@ -24,6 +24,9 @@ let getProblemContent = function(item) {
 
               let sampleoutputWithHint = panelContent.eq(4).text().split('Hint');
 
+              console.log(panelContent.eq(5).children('a').text());
+
+              /*
               const content = {
                 title: connection.escape($('h1').text()),
                 timelimit: patternRes[1],
@@ -34,8 +37,10 @@ let getProblemContent = function(item) {
                 output: connection.escape(panelContent.eq(2).text()),
                 sampleinput: connection.escape(panelContent.eq(3).text()),
                 sampleoutput: connection.escape(sampleoutputWithHint[0]),
-                hint: connection.escape(typeof sampleoutputWithHint[1] === 'undefined' ? '' : sampleoutputWithHint[1])
+                hint: connection.escape(typeof sampleoutputWithHint[1] === 'undefined' ? '' : sampleoutputWithHint[1]
               };
+
+              console.log(content.source);
 
               let query = `UPDATE ${item.tableName} SET
                            title = "${content.title}",
@@ -59,15 +64,16 @@ let getProblemContent = function(item) {
 
               console.log('success ' + item.pid + ' ' + content.title);
             });
-            // connection.end();
+              */
+            connection.end();
           });
 
 }
 
 getProblemContent({
   "ojid": 0,
-  "pid": "5683",
-  "problemUrl": "http://acm.hdu.edu.cn/showproblem.php?pid=5683",
+  "pid": "1001",
+  "problemUrl": "http://acm.hdu.edu.cn/showproblem.php?pid=1001",
   "tableName": "HDOJ_problem"
 });
 

@@ -34,8 +34,11 @@ let getProblemContent = function(item) {
                 output: connection.escape(panelContent.eq(2).text()),
                 sampleinput: connection.escape(panelContent.eq(3).text()),
                 sampleoutput: connection.escape(sampleoutputWithHint[0]),
-                hint: connection.escape(typeof sampleoutputWithHint[1] === 'undefined' ? '' : sampleoutputWithHint[1])
+                hint: connection.escape(typeof sampleoutputWithHint[1] === 'undefined' ? '' : sampleoutputWithHint[1]),
+                source: connection.escape(panelContent.eq(5).children('a').text())
               };
+
+              let time = new Date().getTime();
 
               let query = `UPDATE problem SET
                            title = "${content.title}",
@@ -48,6 +51,8 @@ let getProblemContent = function(item) {
                            sampleinput = "${content.sampleinput}",
                            sampleoutput = "${content.sampleoutput}",
                            hint = "${content.hint}",
+                           source = "${content.source}",
+                           time = "${time}",
                            status = 1
                            WHERE ojid = ${item.ojid} AND
                                  pid = ${item.pid}`;
