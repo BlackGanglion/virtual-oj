@@ -3,18 +3,37 @@
 import connection from '../init/database';
 import _ from 'lodash';
 
-export default function getProblemList(query, callback) {
-  const ojid = query.ojid;
-  const timeOrder = query.time;
-  const pidOrder = query.pid;
-
-  if(_.isEmpty(ojid)) {
-    connection.query('SELECT * FROM problem ORDER BY time desc', function(err, rows, fields) {
-      if (err) throw err;
-      callback(rows);
-    });
-    // connection.end();
-  } else {
-
-  }
+export default function getProblemList(OJid, callback) {
+  connection.query('SELECT * FROM problem WHERE ojid = ? ORDER BY time desc', [ OJid ], function(err, rows, fields) {
+    if(err) {
+      callback({
+        code: 1,
+        error: err
+      })
+    } else {
+      let isFetchPro = false;
+      let res = rows.map(function(e, i) {
+        if(!e.status) isFetchPro = true;
+        return {
+          ...e,
+          title: unescape(e.title),
+          description: unescape(e.description),
+          input: unescape(e.input),
+          output: unescape(e.output),
+          sampleinput: unescape(e.sampleinput),
+          sampleoutput: unescape(e.sampleoutput),
+          hint: unescape(e.hint),
+          source: unescape(e.source)
+        }
+      })
+      callback({
+        code: 0,
+        error: '',
+        body: {
+          isFetchPro,
+          data: res
+        }
+      });
+    }
+  });
 }

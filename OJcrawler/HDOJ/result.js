@@ -25,17 +25,17 @@ let getProblemContent = function(item) {
               let sampleoutputWithHint = panelContent.eq(4).text().split('Hint');
 
               const content = {
-                title: connection.escape($('h1').text()),
+                title: escape($('h1').text()),
                 timelimit: patternRes[1],
                 memorylimit: patternRes[3],
-                description: connection.escape(panelContent.eq(0).text()),
+                description: escape(panelContent.eq(0).text()),
                 specialjudge: $('font[color=red]').text() === '' ? 0 : 1,
-                input: connection.escape(panelContent.eq(1).text()),
-                output: connection.escape(panelContent.eq(2).text()),
-                sampleinput: connection.escape(panelContent.eq(3).text()),
-                sampleoutput: connection.escape(sampleoutputWithHint[0]),
-                hint: connection.escape(typeof sampleoutputWithHint[1] === 'undefined' ? '' : sampleoutputWithHint[1]),
-                source: connection.escape(panelContent.eq(5).children('a').text())
+                input: escape(panelContent.eq(1).text()),
+                output: escape(panelContent.eq(2).text()),
+                sampleinput: escape(panelContent.eq(3).text()),
+                sampleoutput: escape(sampleoutputWithHint[0]),
+                hint: escape(typeof sampleoutputWithHint[1] === 'undefined' ? '' : sampleoutputWithHint[1]),
+                source: escape(panelContent.eq(5).children('a').text())
               };
 
               let time = new Date().getTime();

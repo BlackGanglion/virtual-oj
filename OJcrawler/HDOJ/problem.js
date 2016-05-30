@@ -41,14 +41,48 @@ export default function(pid, callback) {
       }, function(err, res) {
         if(err !== null) {
           logger.error(err);
-          callback({ info: 'some error' });
+          callback({
+            code: 1,
+            error: 'some error',
+            body: {}
+          });
         }
-        callback({ info: 'success' });
+        callback({
+          code: 0,
+          error: '',
+          body: {
+            isFetchPro: true,
+            data: [{
+              ojid: hdojInfo.ojid,
+              pid: hdojInfo.pid,
+              title: '',
+              time: '',
+              source: '',
+              status: 0
+            }]
+          }
+        })
       });
     } else {
+      let isFetchPro = false;
+      if(res.status === 0) isFetchPro = true;
       callback({
-        info: 'getCache',
-        ...res
+        code: 0,
+        error: '',
+        body: {
+          isFetchPro,
+          data: [{
+            ...res,
+            title: unescape(res.title),
+            description: unescape(res.description),
+            input: unescape(res.input),
+            output: unescape(res.output),
+            sampleinput: unescape(res.sampleinput),
+            sampleoutput: unescape(res.sampleoutput),
+            hint: unescape(res.hint),
+            source: unescape(res.source)
+          }]
+        }
       });
     }
   });

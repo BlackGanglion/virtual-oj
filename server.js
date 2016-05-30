@@ -1,4 +1,5 @@
 import express from 'express';
+import _ from 'lodash';
 const app = express();
 
 import HDOJProblemSubmit from './OJcrawler/HDOJ/problem';
@@ -9,17 +10,41 @@ app.all('*', function(req, res, next) {
   next();
 });
 
-/*
-列表页面
-有hash参数，ojid，筛选出该oj所有题目，
-按时间(0不排序，1升序，-1降序)，按pid排序
-*/
 app.get('/problem', function (req, res) {
-  getProblemList(req.query, function(ans) {
-    res.json(ans);
-  });
+  // 根据query参数进行判断
+  if(_.isEmpty(req.query)) {
+    res.json({
+      code: 1,
+      error: '请求参数有误',
+      body: {}
+    })
+  } else {
+    if(_.isEmpty(req.query.searchPid)) {
+      getProblemList(req.query.OJId, function(ans) {
+        res.json(ans);
+      });
+    } else {
+      switch(req.query.OJId) {
+        case '0': {
+          HDOJProblemSubmit(req.query.searchPid, function(ans) {
+            res.json(ans);
+          });
+          break;
+        }
+        default: {
+          res.json({
+            code: 1,
+            error: '请求参数有误, 请检查',
+            body: {}
+          });
+        }
+      }
+    }
+  }
 });
 
+
+// 测试接口
 app.get('/:oj/:pid', function (req, res) {
   let oj = req.params.oj;
   let pid = req.params.pid;
@@ -37,8 +62,6 @@ app.get('/:oj/:pid', function (req, res) {
       });
     }
   }
-
-
 });
 
 const port = process.env.PORT || 3000;

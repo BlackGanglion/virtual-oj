@@ -13,9 +13,9 @@ function selectOJ(OJId) {
 const SEARCH_PID = ACTION_PREFIX + 'SEARCH_PID';
 function onSearchPid(searchPid) {
   return {
-    type: SEARCH_PRO_ID,
+    type: SEARCH_PID,
     payload: {
-      searchProId
+      searchPid
     }
   }
 }
@@ -35,7 +35,8 @@ export default function ProblemNavReducer(state = initialState, action) {
     case SELECT_OJ: {
       return {
         ...state,
-        OJId: action.payload.OJId
+        OJId: action.payload.OJId,
+        searchPid: ''
       }
     }
     case SEARCH_PID: {

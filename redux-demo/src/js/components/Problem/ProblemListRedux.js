@@ -15,7 +15,8 @@ function successProblems(json) {
   return {
     type: SUCCESS_PROBLEMS,
     payload: {
-      problems: json
+      problems: json.body.data,
+      isFetchPro: json.body.isFetchPro
     }
   }
 }
@@ -28,8 +29,10 @@ function requestProblems(params) {
 }
 
 function fetchProblems(params) {
+  const url = `http://127.0.0.1:3000/problem?OJId=${params.OJId}&searchPid=${params.searchPid}`;
+  // console.log(url);
   return (dispatch, getState) => {
-    return fetch(`http://127.0.0.1:3000/problem?OJId=${params.OJId}`)
+    return fetch(url)
       .then(response => response.json())
       .then(json => dispatch(successProblems(json)))
   }
@@ -41,7 +44,8 @@ export const actions = {
 
 const initialState = {
   OJProblems: [],
-  loading: false
+  loading: false,
+  isFetchPro: false
 }
 
 export default function ProblemListReducer(state = initialState, action) {
@@ -59,12 +63,14 @@ export default function ProblemListReducer(state = initialState, action) {
           pid: e.pid,
           title: e.title,
           time: e.time,
-          source: ''
+          source: e.source,
+          status: e.status
         }
       })
       return {
         ...state,
         loading: false,
+        isFetchPro: action.payload.isFetchPro,
         OJProblems
       }
     }

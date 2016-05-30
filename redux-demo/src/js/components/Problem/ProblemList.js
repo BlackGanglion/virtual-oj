@@ -1,40 +1,24 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
-import { Table } from 'antd';
+import { Table, Spin } from 'antd';
 import { connect } from 'react-redux';
 import { actions } from './ProblemListRedux';
-
 import { OJList } from '../../config/config';
 
-/*
-const data = [
-  {
-    "OJId": 0,
-    "pid": 1000,
-    "title": "A + B Problem",
-    "time": 1460723511,
-    "source": "水题集1"
-  },
-  {
-    "OJId": 0,
-    "pid": 1001,
-    "title": "Sum Problem",
-    "time": 1460723510,
-    "source": "水题集2"
-  },
-  {
-    "OJId": 0,
-    "pid": 1002,
-    "title": "A + B Problem II",
-    "time": 1460723509,
-    "source": "水题集3"
-  }
-]
-*/
+function changeTimeFormat(time) {
+  let date = new Date(time);
+  let month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
+  let currentDate = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+  let hh = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+  let mm = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+  return date.getFullYear() + "-" + month + "-" + currentDate + " " + hh + ":" + mm;
+}
 
 @connect(state => {
   return {
-    ...state.problems.problemList
+    ...state.problems.problemList,
+    OJId: state.problems.problemNav.OJId,
+    searchPid: state.problems.problemNav.searchPid
   };
 }, {
   ...actions
@@ -44,7 +28,10 @@ class ProblemList extends Component {
   static propTypes = {
     OJProblems: PropTypes.array.isRequired,
     loading: PropTypes.bool.isRequired,
-    requestProblems: PropTypes.func.isRequired
+    isFetchPro: PropTypes.bool.isRequired,
+    requestProblems: PropTypes.func.isRequired,
+    OJId: PropTypes.number.isRequired,
+    searchPid: PropTypes.string
   };
 
   constructor(props) {
@@ -52,7 +39,40 @@ class ProblemList extends Component {
   };
 
   componentDidMount() {
-    this.props.requestProblems({OJId: 0});
+    this.props.requestProblems({
+      OJId: this.props.OJId,
+      searchPid: this.props.searchPid
+    });
+    if (this.props.isFetchPro) {
+      console.log('componentDidMount fetch');
+      let self = this;
+      setTimeout(function(){
+        self.props.requestProblems({
+          OJId: self.props.OJId,
+          searchPid: self.props.searchPid
+        });
+      }, 2000);
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.OJId !== prevProps.OJId
+      || this.props.searchPid !== prevProps.searchPid) {
+      this.props.requestProblems({
+        OJId: this.props.OJId,
+        searchPid: this.props.searchPid
+      });
+    }
+    if (this.props.isFetchPro) {
+      console.log('componentDidUpdate fetch');
+      let self = this;
+      setTimeout(function(){
+        self.props.requestProblems({
+          OJId: self.props.OJId,
+          searchPid: self.props.searchPid
+        });
+      }, 2000);
+    }
   }
 
   render() {
@@ -62,26 +82,50 @@ class ProblemList extends Component {
       title: 'OJ',
       dataIndex: 'OJId',
       key: 'OJId',
+      width: 120,
       render: (id) => OJList[0].OJName
     }, {
       title: 'Prob ID',
       dataIndex: 'pid',
       key: 'pid',
+      width: 120,
       sorter: (a, b) => a.pid - b.pid
     }, {
       title: 'Title',
       dataIndex: 'title',
       key: 'title',
-      render: (title, item, i) => <a href={`/problem/${item.OJId}/${item.pid}`}>{title}</a>
+      width: 200,
+      render: (title, item, i) => {
+        if(item.status) {
+          return (<a href={`/problem/${item.OJId}/${item.pid}`}>{title}</a>);
+        } else {
+          return (<Spin />);
+        }
+      }
     }, {
       title: 'Update Time',
       dataIndex: 'time',
       key: 'time',
-      sorter: (a, b) => a.time - b.time
+      width: 200,
+      sorter: (a, b) => a.time - b.time,
+      render: (time, item) => {
+        if(item.status) {
+          return changeTimeFormat(parseInt(time));
+        } else {
+          return (<Spin />);
+        }
+      }
     }, {
       title: 'Source',
       dataIndex: 'source',
-      key: 'source'
+      key: 'source',
+      render: (source, item) => {
+        if(item.status) {
+          return source;
+        } else {
+          return (<Spin />);
+        }
+      }
     }];
 
     return(
