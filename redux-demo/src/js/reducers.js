@@ -1,5 +1,6 @@
-import { ProblemsReducer } from './pages';
+import { ProblemsReducer, ProblemDetailReducer } from './pages';
 
 export default {
-  problems: ProblemsReducer
+  problems: ProblemsReducer,
+  problemDetail: ProblemDetailReducer
 };

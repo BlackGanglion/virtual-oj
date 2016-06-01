@@ -4,11 +4,26 @@ const app = express();
 
 import HDOJProblemSubmit from './OJcrawler/HDOJ/problem';
 import getProblemList from './web/getProblemList';
+import getProblem from './web/getProblem';
 
 app.all('*', function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   next();
 });
+
+app.get('/pro', function (req, res) {
+  if(_.isEmpty(req.query.OJId) || _.isEmpty(req.query.pid)) {
+    res.json({
+      code: 1,
+      error: '请求参数有误',
+      body: {}
+    })
+  } else {
+    getProblem(req.query, function(ans) {
+      res.json(ans);
+    });
+  }
+})
 
 app.get('/problem', function (req, res) {
   // 根据query参数进行判断

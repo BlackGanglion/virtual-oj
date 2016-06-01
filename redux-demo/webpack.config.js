@@ -38,6 +38,10 @@ module.exports = {
           'url',
           'img'
         ]
+      },
+      {
+        test: /\.json$/,
+        loader: 'json'
       }
     ]
   }

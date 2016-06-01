@@ -8,3 +8,25 @@
     float: right;
   }
 }
+
+.problem-detail {
+  width: 65%;
+  margin: 0 auto;
+}
+
+pre {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.problem-content {
+  margin: 20px 0;
+}
+
+.problem-title {
+  margin: 30px 0;
+}
+
+.problem-timeMemory {
+  float: left;
+}

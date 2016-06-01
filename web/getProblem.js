@@ -3,17 +3,16 @@
 import connection from '../init/database';
 import _ from 'lodash';
 
-export default function getProblemList(OJId, callback) {
-  connection.query('SELECT * FROM problem WHERE ojid = ? ORDER BY time desc', [ OJId ], function(err, rows, fields) {
+export default function getProblemList(params, callback) {
+  connection.query('SELECT * FROM problem WHERE ojid = ? AND pid = ?',
+    [ params.OJId, params.pid ], function(err, rows, fields) {
     if(err) {
       callback({
         code: 1,
         error: err
       })
     } else {
-      let isFetchPro = false;
       let res = rows.map(function(e, i) {
-        if(!e.status) isFetchPro = true;
         return {
           ...e,
           title: unescape(e.title),
@@ -30,7 +29,6 @@ export default function getProblemList(OJId, callback) {
         code: 0,
         error: '',
         body: {
-          isFetchPro,
           data: res
         }
       });

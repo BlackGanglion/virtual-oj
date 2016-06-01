@@ -16,7 +16,6 @@ const InputGroup = Input.Group;
 }, {
   ...actions
 })
-
 class ProblemNav extends Component {
   static propTypes = {
     OJId: PropTypes.number.isRequired,

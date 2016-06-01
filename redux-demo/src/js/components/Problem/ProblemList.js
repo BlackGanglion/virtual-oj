@@ -23,7 +23,6 @@ function changeTimeFormat(time) {
 }, {
   ...actions
 })
-
 class ProblemList extends Component {
   static propTypes = {
     OJProblems: PropTypes.array.isRequired,
