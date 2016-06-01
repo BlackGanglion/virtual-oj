@@ -1,6 +1,6 @@
 {
   "name": "virtual-oj",
-  "version": "1.2.0",
+  "version": "1.0.1",
   "description": "virtual-oj-system",
   "main": "index.js",
   "//": "http://localhost:15672/",
