@@ -59,7 +59,7 @@ export default function ProblemListReducer(state = initialState, action) {
     case SUCCESS_PROBLEMS: {
       let OJProblems = action.payload.problems.map(function(e, i){
         return {
-          OJId: OJList[e.ojid].OJName,
+          OJId: e.ojid,
           pid: e.pid,
           title: e.title,
           time: e.time,

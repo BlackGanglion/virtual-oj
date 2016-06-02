@@ -35,6 +35,7 @@ class ProblemNav extends Component {
 
   // actions
   selectOJ(value) {
+    console.log(value);
     this.props.selectOJ(value);
   }
 

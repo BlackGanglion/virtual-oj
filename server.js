@@ -3,6 +3,7 @@ import _ from 'lodash';
 const app = express();
 
 import HDOJProblemSubmit from './OJcrawler/HDOJ/problem';
+import POJProblemSubmit from './OJcrawler/POJ/problem';
 import getProblemList from './web/getProblemList';
 import getProblem from './web/getProblem';
 
@@ -46,6 +47,12 @@ app.get('/problem', function (req, res) {
           });
           break;
         }
+        case '1': {
+          POJProblemSubmit(req.query.searchPid, function(ans) {
+            res.json(ans);
+          });
+          break;
+        }
         default: {
           res.json({
             code: 1,
@@ -65,8 +72,14 @@ app.get('/:oj/:pid', function (req, res) {
   let pid = req.params.pid;
 
   switch(oj) {
-    case 'HDOJ': {
+    case '0': {
       HDOJProblemSubmit(pid, function(ans) {
+        res.json(ans);
+      });
+      break;
+    }
+    case '1': {
+      POJProblemSubmit(pid, function(ans) {
         res.json(ans);
       });
       break;

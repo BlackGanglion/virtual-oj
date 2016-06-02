@@ -6,34 +6,34 @@ import logger from '../../init/log';
 import { addToQueue } from '../../init/rabbitMQ';
 import async from 'async';
 
-const hdojConfig = OJList[0];
+const pojConfig = OJList[1];
 
-let getProblemCache = function(hdojInfo, callback) {
+let getProblemCache = function(pojInfo, callback) {
   connection.query('SELECT * FROM problem WHERE ojid = ? AND pid = ?',
-    [hdojInfo.ojid, hdojInfo.pid], function(err, rows, fields) {
+    [pojInfo.ojid, pojInfo.pid], function(err, rows, fields) {
     if (err) throw err;
     callback(rows[0]);
   });
 }
 
 export default function(pid, callback) {
-  let hdojInfo = {
-    ojid: hdojConfig.ojid,
+  let pojInfo = {
+    ojid: pojConfig.ojid,
     pid: pid,
-    problemUrl: hdojConfig.problemUrl + pid,
+    problemUrl: pojConfig.problemUrl + pid
   }
 
-  getProblemCache(hdojInfo, function(res){
+  getProblemCache(pojInfo, function(res){
     if(typeof res === 'undefined') {
       async.auto({
         addToDataBase: function(callback) {
           connection.query("INSERT INTO problem SET ojid = ?, pid = ?, status = 0;",
-            [hdojInfo.ojid, pid], function(err){
+            [pojInfo.ojid, pid], function(err){
             callback(err, null);
           });
         },
         addToQueue: ['addToDataBase', function(callback, res) {
-          addToQueue('problem', hdojInfo, function(){
+          addToQueue('problem', pojInfo, function(){
             callback(null, null);
           });
         }]
@@ -52,8 +52,8 @@ export default function(pid, callback) {
           body: {
             isFetchPro: true,
             data: [{
-              ojid: hdojInfo.ojid,
-              pid: hdojInfo.pid,
+              ojid: pojInfo.ojid,
+              pid: pojInfo.pid,
               title: '',
               time: '',
               source: '',

@@ -82,7 +82,7 @@ class ProblemList extends Component {
       dataIndex: 'OJId',
       key: 'OJId',
       width: 120,
-      render: (id) => OJList[0].OJName
+      render: (id) => OJList[id].OJName
     }, {
       title: 'Prob ID',
       dataIndex: 'pid',
