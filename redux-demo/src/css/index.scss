@@ -1,6 +1,6 @@
-.problem-list, .problem-nav {
+.title, .problem-list, .problem-nav {
   width: 80%;
-  margin: 0 auto;
+  margin: 20px auto;
 }
 
 .problem-nav {
@@ -29,4 +29,8 @@ pre {
 
 .problem-timeMemory {
   float: left;
+}
+
+.ant-search-input-wrapper {
+  margin-left: 20px;
 }

@@ -69,7 +69,7 @@ class ProblemNav extends Component {
 
     return(
       <div className="problem-nav">
-        <Select defaultValue="HDOJ" style={{ width: 120 }}
+        <Select defaultValue={OJList[OJId].OJName} style={{ width: 120 }}
           onChange={::this.selectOJ}>
           { OJList.map((option, i) =>
             <Option value={option.OJId} key={i}>

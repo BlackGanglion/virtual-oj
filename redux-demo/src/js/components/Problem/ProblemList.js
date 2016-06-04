@@ -4,6 +4,7 @@ import { Table, Spin } from 'antd';
 import { connect } from 'react-redux';
 import { actions } from './ProblemListRedux';
 import { OJList } from '../../config/config';
+import { Link } from 'react-router';
 
 function changeTimeFormat(time) {
   let date = new Date(time);
@@ -96,7 +97,7 @@ class ProblemList extends Component {
       width: 200,
       render: (title, item, i) => {
         if(item.status) {
-          return (<a href={`/problem/${item.OJId}/${item.pid}`}>{title}</a>);
+          return (<Link to={`/problem/${item.OJId}/${item.pid}`}>{title}</Link>);
         } else {
           return (<Spin />);
         }
